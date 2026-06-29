@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: ipl-flash-sale
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ipl_flash_sale
+    username: ipl_user
+    password: ipl_pass
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: booking-workers
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.iplflash.dto"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+redisson:
+  address: redis://localhost:6379
+
+server:
+  port: 8080
